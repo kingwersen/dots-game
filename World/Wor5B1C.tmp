@@ -1,0 +1,83 @@
+[gd_scene load_steps=15 format=3 uid="uid://d3o62j6wm0288"]
+
+[ext_resource type="PackedScene" uid="uid://c8m0fijaxs87v" path="res://BoundingArea/BoundingArea.tscn" id="1_6kcde"]
+[ext_resource type="PackedScene" uid="uid://da8f5kbpqnjpv" path="res://Player/Player.tscn" id="1_jrchf"]
+[ext_resource type="Script" path="res://World/NorthWall.gd" id="2_1iyl4"]
+[ext_resource type="Script" path="res://Dots/Dots.gd" id="2_mkp6k"]
+[ext_resource type="Texture2D" uid="uid://c6vxbhmwnoi3d" path="res://World/EmptyTileSmall.png" id="2_ohkij"]
+[ext_resource type="Script" path="res://Dots/Dot.gd" id="3_py7g2"]
+[ext_resource type="Script" path="res://World/SouthWall.gd" id="3_u6454"]
+[ext_resource type="Script" path="res://World/BackgroundTileSprite.gd" id="3_xfb8s"]
+[ext_resource type="Script" path="res://World/EastWall.gd" id="4_k5v1d"]
+[ext_resource type="Script" path="res://World/WestWall.gd" id="5_cm51k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r1nuc"]
+size = Vector2(3200, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbjl5"]
+size = Vector2(100, 3400)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2q5ad"]
+
+[sub_resource type="PackedScene" id="PackedScene_eig4v"]
+_bundled = {
+"conn_count": 1,
+"conns": PackedInt32Array(1, 0, 10, 9, 2, 0, 0),
+"editable_instances": [],
+"names": PackedStringArray("Dot", "script", "radius", "Node2D", "CollisionArea", "Area2D", "CollisionShape", "shape", "CollisionShape2D", "_on_collision_area_body_entered", "body_entered"),
+"node_count": 3,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 3, 0, -1, 2, 1, 0, 2, 1, 0, 0, 0, 5, 4, -1, 0, 0, 1, 0, 8, 6, -1, 1, 7, 2, 0),
+"variants": [ExtResource("3_py7g2"), 10.0, SubResource("CircleShape2D_2q5ad")],
+"version": 3
+}
+
+[node name="World" type="Node2D"]
+
+[node name="BoundingArea" parent="." instance=ExtResource("1_6kcde")]
+bounding_region = Rect2(0, 0, 1280, 1280)
+
+[node name="NorthWall" type="CollisionShape2D" parent="BoundingArea"]
+position = Vector2(0, -1650)
+shape = SubResource("RectangleShape2D_r1nuc")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+script = ExtResource("2_1iyl4")
+
+[node name="SouthWall" type="CollisionShape2D" parent="BoundingArea"]
+position = Vector2(0, 1650)
+shape = SubResource("RectangleShape2D_r1nuc")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+script = ExtResource("3_u6454")
+
+[node name="EastWall" type="CollisionShape2D" parent="BoundingArea"]
+position = Vector2(1650, 0)
+shape = SubResource("RectangleShape2D_tbjl5")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+script = ExtResource("4_k5v1d")
+
+[node name="WestWall" type="CollisionShape2D" parent="BoundingArea"]
+position = Vector2(-1650, 0)
+shape = SubResource("RectangleShape2D_tbjl5")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+script = ExtResource("5_cm51k")
+
+[node name="BackgroundTileSprite" type="Sprite2D" parent="BoundingArea"]
+texture_filter = 1
+texture_repeat = 2
+scale = Vector2(128, 128)
+texture = ExtResource("2_ohkij")
+region_enabled = true
+region_rect = Rect2(0, 0, 25, 25)
+script = ExtResource("3_xfb8s")
+
+[node name="Dots" type="Node2D" parent="."]
+script = ExtResource("2_mkp6k")
+dot_scene = SubResource("PackedScene_eig4v")
+
+[node name="Player" parent="." instance=ExtResource("1_jrchf")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
+[connection signal="bounding_region_changed" from="BoundingArea" to="BoundingArea/NorthWall" method="_on_bounding_area_bounding_region_changed"]
+[connection signal="bounding_region_changed" from="BoundingArea" to="BoundingArea/BackgroundTileSprite" method="_on_bounding_area_bounding_region_changed"]
+[connection signal="bounding_region_changed" from="BoundingArea" to="Dots" method="_on_bounding_area_bounding_region_changed"]

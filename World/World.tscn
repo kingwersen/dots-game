@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3o62j6wm0288"]
+
+[ext_resource type="PackedScene" uid="uid://c8m0fijaxs87v" path="res://World/BoundingArea.tscn" id="1_6kcde"]
+[ext_resource type="PackedScene" uid="uid://da8f5kbpqnjpv" path="res://Player/Player.tscn" id="1_jrchf"]
+[ext_resource type="Script" path="res://Dots/Dots.gd" id="2_mkp6k"]
+[ext_resource type="Script" path="res://Dots/Dot.gd" id="3_py7g2"]
+[ext_resource type="Script" path="res://World/ClientConnection.gd" id="5_k0hvu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2q5ad"]
+
+[sub_resource type="PackedScene" id="PackedScene_eig4v"]
+_bundled = {
+"conn_count": 1,
+"conns": PackedInt32Array(1, 0, 10, 9, 2, 0, 0),
+"editable_instances": [],
+"names": PackedStringArray("Dot", "script", "radius", "Node2D", "CollisionArea", "Area2D", "CollisionShape", "shape", "CollisionShape2D", "_on_collision_area_body_entered", "body_entered"),
+"node_count": 3,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 3, 0, -1, 2, 1, 0, 2, 1, 0, 0, 0, 5, 4, -1, 0, 0, 1, 0, 8, 6, -1, 1, 7, 2, 0),
+"variants": [ExtResource("3_py7g2"), 10.0, SubResource("CircleShape2D_2q5ad")],
+"version": 3
+}
+
+[node name="World" type="Node2D"]
+
+[node name="BoundingArea" parent="." instance=ExtResource("1_6kcde")]
+
+[node name="Dots" type="Node2D" parent="."]
+script = ExtResource("2_mkp6k")
+dot_scene = SubResource("PackedScene_eig4v")
+num_dots = 5
+bounding_region = Rect2(0, 0, 1280, 1280)
+radius = 10.0
+color = Color(1, 0, 0, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_jrchf")]
+motion_mode = 1
+
+[node name="ClientConnection" type="Node2D" parent="."]
+script = ExtResource("5_k0hvu")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2(10, 10)
+ignore_rotation = false

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://da8f5kbpqnjpv"]
+
+[ext_resource type="Script" path="res://Player/Player.gd" id="1_dbq5m"]
+[ext_resource type="Script" path="res://Player/Indicators/Indicators.gd" id="2_pk7u4"]
+[ext_resource type="PackedScene" uid="uid://b07we6dmdriij" path="res://Player/Indicators/Indicator.tscn" id="3_h73hr"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_dbq5m")
+
+[node name="Collision" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-30, -70, 30, -70, 70, -30, 70, 30, 30, 70, -30, 70, -70, 30, -70, -30)
+
+[node name="OctagonShape" type="Polygon2D" parent="Collision"]
+polygon = PackedVector2Array(-30, -70, 30, -70, 70, -30, 70, 30, 30, 70, -30, 70, -70, 30, -70, -30)
+
+[node name="ArrowShape" type="Polygon2D" parent="Collision"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, -20, 30, 10, -30, 10)
+
+[node name="Indicators" type="Node2D" parent="."]
+script = ExtResource("2_pk7u4")
+indicator_scene = ExtResource("3_h73hr")

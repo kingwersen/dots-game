@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8m0fijaxs87v"]
+
+[ext_resource type="Texture2D" uid="uid://c6vxbhmwnoi3d" path="res://World/EmptyTileSmall.png" id="1_lqkas"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vap8e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shjfp"]
+size = Vector2(1280, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xli0j"]
+size = Vector2(100, 1480)
+
+[node name="BoundingArea" type="StaticBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_vap8e")
+
+[node name="NorthWall" type="CollisionShape2D" parent="."]
+position = Vector2(0, -690)
+shape = SubResource("RectangleShape2D_shjfp")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="SouthWall" type="CollisionShape2D" parent="."]
+position = Vector2(0, 690)
+shape = SubResource("RectangleShape2D_shjfp")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="EastWall" type="CollisionShape2D" parent="."]
+position = Vector2(690, 0)
+shape = SubResource("RectangleShape2D_xli0j")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="WestWall" type="CollisionShape2D" parent="."]
+position = Vector2(-690, 0)
+shape = SubResource("RectangleShape2D_xli0j")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="BackgroundTileSprite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+scale = Vector2(128, 128)
+texture = ExtResource("1_lqkas")
+region_enabled = true
+region_rect = Rect2(0, 0, 10, 10)
